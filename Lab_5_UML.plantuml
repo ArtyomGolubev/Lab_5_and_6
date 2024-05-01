@@ -1,0 +1,371 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class AbstractCommand {
+  + AbstractCommand(String, String, String): 
+  - name: String
+  # fileHandler: FileHandler
+  # regards: String
+  # collectionProcessor: CollectionProcessor
+  - description: String
+  + getName(): String
+  + execute(): void
+  + setCollectionProcessor(CollectionProcessor): void
+  + getDescription(): String
+  # sendRegards(): void
+  + setFileHandler(FileHandler): void
+}
+class Add {
+  + Add(String): 
+  + execute(): void
+  + executeFromScript(String[]): void
+}
+enum AstartesCategory << enumeration >> {
+  + AstartesCategory(): 
+  + TERMINATOR: 
+  + ASSAULT: 
+  + SUPPRESSOR: 
+  + values(): AstartesCategory[]
+  + valueOf(String): AstartesCategory
+}
+class BlankRequestException {
+  + BlankRequestException(String): 
+}
+class Chapter {
+  + Chapter(String, String): 
+  - parentLegion: String
+  - chaptername: String
+  + getChapterName(): String
+  + equals(Object): boolean
+  + hashCode(): int
+  + getParentLegion(): String
+  + toString(): String
+}
+class Clear {
+  + Clear(String): 
+  + execute(): void
+}
+class CollectionProcessor {
+  + CollectionProcessor(FileHandler, Sender): 
+  + CollectionProcessor(FileHandler, Sender, String): 
+  - fileHandler: FileHandler
+  - fileName: String
+  - sender: Sender
+  - data: String
+  - collection: LinkedList<SpaceMarine>
+  - collectionFileName: String
+  - lastUpdateDate: LocalDate
+  + marineCreationFromFile(String[]): void
+  + marineCreationFromInput(): SpaceMarine
+  + getMarinesByName(String): SpaceMarine[]
+  + clearCollection(): void
+  + removeMarineById(long): void
+  + getMarineById(long): SpaceMarine
+  + setFileHandler(FileHandler): void
+  + loadFromFile(): void
+  + getMarinesWithLessThanCertainHealth(float): SpaceMarine[]
+  + getData(): String
+  + getCollection(): LinkedList<SpaceMarine>
+  + addNewMarine(SpaceMarine): void
+  + getMarinesByHeartCount(int): SpaceMarine[]
+  + shuffleCollection(): void
+  + setMarineById(long, SpaceMarine): void
+  - updateData(): void
+  + getSender(): Sender
+  + getCollectionFileName(): String
+  + loadFromFile(String): void
+}
+class CommandProcessor {
+  + CommandProcessor(FileHandler): 
+  - processor: CollectionProcessor
+  - commands: HashMap<String, AbstractCommand>
+  - fileHandler: FileHandler
+  + initiate(String): void
+  + getCommands(): HashSet<AbstractCommand>
+  + processCommandsFromFile(String[]): void
+  + addCommands(AbstractCommand[]): void
+  - splitRequest(String): String[]
+  + setCollectionProcessor(CollectionProcessor): void
+}
+class ConsoleProcessor {
+  + ConsoleProcessor(Scanner, CommandProcessor): 
+  - scanner: Scanner
+  - commandProcessor: CommandProcessor
+  + getCommandProcessor(): CommandProcessor
+  + getInput(): void
+  + ask(String): String
+  + printAdvice(String): void
+  + askWeaponType(Weapon[]): String
+  + requestFilePath(): String
+  + askAstartesCategory(AstartesCategory[]): String
+  + askWhatToChange(): String
+  + print(Object): void
+  + println(Object): void
+  + printError(String): void
+}
+class Coordinates {
+  + Coordinates(Float, float): 
+  - x: Float
+  - y: float
+  + getX(): Float
+  + toString(): String
+  + equals(Object): boolean
+  + hashCode(): int
+  + getY(): float
+}
+class ExecuteScript {
+  + ExecuteScript(String): 
+  - stackwithnames: Stack<String>
+  + execute(String[]): void
+}
+class Exit {
+  + Exit(String): 
+  + execute(): void
+}
+interface ExtendedCommand << interface >> {
+  + execute(String[]): void
+}
+interface FileHandler << interface >> {
+  + write(LinkedList<SpaceMarine>, String): void
+  + read(String, ConsoleProcessor): LinkedList<SpaceMarine>
+}
+class FileProcessor {
+  + FileProcessor(): 
+  + write(LinkedList<SpaceMarine>, String): void
+  + read(String, ConsoleProcessor): LinkedList<SpaceMarine>
+  - parseSpaceMarines(String[]): SpaceMarine
+}
+class FilterContainsName {
+  + FilterContainsName(String): 
+  + execute(String[]): void
+}
+class FilterLessThanHealth {
+  + FilterLessThanHealth(String): 
+  - health: float
+  + execute(String[]): void
+}
+class Help {
+  + Help(String): 
+  + execute(): void
+}
+class IncorrectFileNameException {
+  + IncorrectFileNameException(String): 
+}
+class Info {
+  + Info(String): 
+  + execute(): void
+}
+class Main {
+  + Main(): 
+  + main(String[]): void
+}
+class NonexistentCommandException {
+  + NonexistentCommandException(String): 
+}
+class NotFoundException {
+  + NotFoundException(String): 
+}
+class RecursionException {
+  + RecursionException(String): 
+}
+class RemoveAnyByHeartCount {
+  + RemoveAnyByHeartCount(String): 
+  + execute(String[]): void
+}
+class RemoveById {
+  + RemoveById(String): 
+  + execute(String[]): void
+}
+class RemoveGreater {
+  + RemoveGreater(String): 
+  + execute(): void
+}
+class RemoveLower {
+  + RemoveLower(String): 
+  + execute(): void
+}
+class Save {
+  + Save(String): 
+  + execute(String[]): void
+}
+class ScriptProcessor {
+  + ScriptProcessor(): 
+  - readScript(String): String[]
+  + readCommands(String, CommandProcessor): void
+}
+class Sender {
+  + Sender(ConsoleProcessor): 
+  - consoleProcessor: ConsoleProcessor
+  + heartCountRequest(): int
+  + healthRequest(): float
+  + astartesCategoryRequest(): AstartesCategory
+  + weaponRequest(): Weapon
+  + coordinatesRequest(): Coordinates
+  + chapterRequest(): Chapter
+  + getConsoleProcessor(): ConsoleProcessor
+  + nameRequest(): String
+}
+class Show {
+  + Show(String): 
+  + execute(): void
+  + execute(String[]): void
+}
+class Shuffle {
+  + Shuffle(String): 
+  + execute(): void
+}
+class SpaceMarine {
+  + SpaceMarine(Long, String, Coordinates, LocalDate, float, Integer, AstartesCategory, Weapon, Chapter): 
+  - name: String
+  - heartCount: Integer
+  - id: Long
+  - creationDate: LocalDate
+  - coordinates: Coordinates
+  - weaponType: Weapon
+  - health: float
+  - chapter: Chapter
+  - category: AstartesCategory
+  + getChapter(): Chapter
+  + getCreationDate(): LocalDate
+  + getHeartCount(): Integer
+  + equals(Object): boolean
+  + getCoordinates(): Coordinates
+  + getHealth(): float
+  + toString(): String
+  + getId(): Long
+  + getName(): String
+  + compareTo(SpaceMarine): int
+  + getAstartesCategory(): AstartesCategory
+  + hashCode(): int
+  + getWeaponType(): Weapon
+}
+interface StandartCommand << interface >> {
+  + execute(): void
+}
+class Update {
+  + Update(String): 
+  + execute(String[]): void
+}
+class Validator {
+  + Validator(): 
+  + NumberChecker(String): boolean
+  + isSubstringChecker(String, String): boolean
+  + EmptyArrayChecker(Object[]): boolean
+  + IntegerChecker(String): boolean
+  + CorrectNumberChecker(String, Class<T>): boolean
+  + ValidNameChecker(String): boolean
+  + isNullChecker(Object): boolean
+}
+enum Weapon << enumeration >> {
+  + Weapon(): 
+  + FLAMER: 
+  + HEAVY_BOLTGUN: 
+  + GRENADE_LAUNCHER: 
+  + MULTI_MELTA: 
+  + valueOf(String): Weapon
+  + values(): Weapon[]
+}
+class WrongParameterException {
+  + WrongParameterException(String): 
+}
+
+AbstractCommand             "1" *-[#595959,plain]-> "collectionProcessor\n1" CollectionProcessor         
+AbstractCommand             "1" *-[#595959,plain]-> "fileHandler\n1" FileHandler                 
+Add                          -[#000082,plain]-^  AbstractCommand             
+Add                          -[#008200,dashed]-^  StandartCommand             
+Clear                        -[#000082,plain]-^  AbstractCommand             
+Clear                        -[#008200,dashed]-^  StandartCommand             
+CollectionProcessor          -[#595959,dashed]->  Chapter                     : "«create»"
+CollectionProcessor          -[#595959,dashed]->  Coordinates                 : "«create»"
+CollectionProcessor         "1" *-[#595959,plain]-> "fileHandler\n1" FileHandler                 
+CollectionProcessor          -[#595959,dashed]->  NotFoundException           : "«create»"
+CollectionProcessor         "1" *-[#595959,plain]-> "sender\n1" Sender                      
+CollectionProcessor         "1" *-[#595959,plain]-> "collection\n*" SpaceMarine                 
+CollectionProcessor          -[#595959,dashed]->  SpaceMarine                 : "«create»"
+CommandProcessor            "1" *-[#595959,plain]-> "commands\n*" AbstractCommand             
+CommandProcessor             -[#595959,dashed]->  BlankRequestException       : "«create»"
+CommandProcessor            "1" *-[#595959,plain]-> "processor\n1" CollectionProcessor         
+CommandProcessor            "1" *-[#595959,plain]-> "fileHandler\n1" FileHandler                 
+CommandProcessor             -[#595959,dashed]->  NonexistentCommandException : "«create»"
+CommandProcessor             -[#595959,dashed]->  WrongParameterException     : "«create»"
+ConsoleProcessor            "1" *-[#595959,plain]-> "commandProcessor\n1" CommandProcessor            
+ExecuteScript                -[#000082,plain]-^  AbstractCommand             
+ExecuteScript                -[#008200,dashed]-^  ExtendedCommand             
+ExecuteScript                -[#595959,dashed]->  RecursionException          : "«create»"
+ExecuteScript                -[#595959,dashed]->  WrongParameterException     : "«create»"
+Exit                         -[#000082,plain]-^  AbstractCommand             
+Exit                         -[#008200,dashed]-^  StandartCommand             
+FileProcessor                -[#595959,dashed]->  Chapter                     : "«create»"
+FileProcessor                -[#595959,dashed]->  Coordinates                 : "«create»"
+FileProcessor                -[#008200,dashed]-^  FileHandler                 
+FileProcessor                -[#595959,dashed]->  SpaceMarine                 : "«create»"
+FilterContainsName           -[#000082,plain]-^  AbstractCommand             
+FilterContainsName           -[#008200,dashed]-^  ExtendedCommand             
+FilterLessThanHealth         -[#000082,plain]-^  AbstractCommand             
+FilterLessThanHealth         -[#008200,dashed]-^  ExtendedCommand             
+FilterLessThanHealth         -[#595959,dashed]->  WrongParameterException     : "«create»"
+Help                         -[#000082,plain]-^  AbstractCommand             
+Help                         -[#008200,dashed]-^  StandartCommand             
+Info                         -[#000082,plain]-^  AbstractCommand             
+Info                         -[#008200,dashed]-^  StandartCommand             
+Main                         -[#595959,dashed]->  Add                         : "«create»"
+Main                         -[#595959,dashed]->  Clear                       : "«create»"
+Main                         -[#595959,dashed]->  CollectionProcessor         : "«create»"
+Main                         -[#595959,dashed]->  CommandProcessor            : "«create»"
+Main                         -[#595959,dashed]->  ConsoleProcessor            : "«create»"
+Main                         -[#595959,dashed]->  ExecuteScript               : "«create»"
+Main                         -[#595959,dashed]->  Exit                        : "«create»"
+Main                         -[#595959,dashed]->  FileProcessor               : "«create»"
+Main                         -[#595959,dashed]->  FilterContainsName          : "«create»"
+Main                         -[#595959,dashed]->  FilterLessThanHealth        : "«create»"
+Main                         -[#595959,dashed]->  Help                        : "«create»"
+Main                         -[#595959,dashed]->  Info                        : "«create»"
+Main                         -[#595959,dashed]->  RemoveAnyByHeartCount       : "«create»"
+Main                         -[#595959,dashed]->  RemoveById                  : "«create»"
+Main                         -[#595959,dashed]->  RemoveGreater               : "«create»"
+Main                         -[#595959,dashed]->  RemoveLower                 : "«create»"
+Main                         -[#595959,dashed]->  Save                        : "«create»"
+Main                         -[#595959,dashed]->  Sender                      : "«create»"
+Main                         -[#595959,dashed]->  Show                        : "«create»"
+Main                         -[#595959,dashed]->  Shuffle                     : "«create»"
+Main                         -[#595959,dashed]->  Update                      : "«create»"
+RemoveAnyByHeartCount        -[#000082,plain]-^  AbstractCommand             
+RemoveAnyByHeartCount        -[#008200,dashed]-^  ExtendedCommand             
+RemoveAnyByHeartCount        -[#595959,dashed]->  WrongParameterException     : "«create»"
+RemoveById                   -[#000082,plain]-^  AbstractCommand             
+RemoveById                   -[#008200,dashed]-^  ExtendedCommand             
+RemoveById                   -[#595959,dashed]->  WrongParameterException     : "«create»"
+RemoveGreater                -[#000082,plain]-^  AbstractCommand             
+RemoveGreater                -[#008200,dashed]-^  StandartCommand             
+RemoveLower                  -[#000082,plain]-^  AbstractCommand             
+RemoveLower                  -[#008200,dashed]-^  StandartCommand             
+Save                         -[#000082,plain]-^  AbstractCommand             
+Save                         -[#008200,dashed]-^  ExtendedCommand             
+Save                         -[#595959,dashed]->  IncorrectFileNameException  : "«create»"
+Save                         -[#008200,dashed]-^  StandartCommand             
+ScriptProcessor              +-[#820000,plain]-  ConsoleProcessor            
+ScriptProcessor              -[#595959,dashed]->  RecursionException          : "«create»"
+ScriptProcessor              -[#595959,dashed]->  WrongParameterException     : "«create»"
+Sender                       -[#595959,dashed]->  BlankRequestException       : "«create»"
+Sender                       -[#595959,dashed]->  Chapter                     : "«create»"
+Sender                      "1" *-[#595959,plain]-> "consoleProcessor\n1" ConsoleProcessor            
+Sender                       -[#595959,dashed]->  Coordinates                 : "«create»"
+Sender                       -[#595959,dashed]->  WrongParameterException     : "«create»"
+Show                         -[#000082,plain]-^  AbstractCommand             
+Show                         -[#008200,dashed]-^  ExtendedCommand             
+Show                         -[#008200,dashed]-^  StandartCommand             
+Show                         -[#595959,dashed]->  WrongParameterException     : "«create»"
+Shuffle                      -[#000082,plain]-^  AbstractCommand             
+Shuffle                      -[#008200,dashed]-^  StandartCommand             
+SpaceMarine                 "1" *-[#595959,plain]-> "category\n1" AstartesCategory            
+SpaceMarine                 "1" *-[#595959,plain]-> "chapter\n1" Chapter                     
+SpaceMarine                 "1" *-[#595959,plain]-> "coordinates\n1" Coordinates                 
+SpaceMarine                 "1" *-[#595959,plain]-> "weaponType\n1" Weapon                      
+Update                       -[#000082,plain]-^  AbstractCommand             
+Update                       -[#008200,dashed]-^  ExtendedCommand             
+Update                       -[#595959,dashed]->  SpaceMarine                 : "«create»"
+Update                       -[#595959,dashed]->  WrongParameterException     : "«create»"
+@enduml
