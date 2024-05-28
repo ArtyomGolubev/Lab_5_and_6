@@ -38,12 +38,12 @@ public class Client {
                 new FilterContainsNameRequest("filter_contains_name"),
                 new ExitRequest("exit"));
 
-        TCPClient tcpClient = new TCPClient(SERVER_ADDRESS, SERVER_PORT);
-        Sender sender = new Sender(tcpClient);
+        UDPClient udpClient = new UDPClient(SERVER_ADDRESS, SERVER_PORT);
+        Sender sender = new Sender(udpClient);
         ResponseHandler responseHandler = new ResponseHandler();
         ConsoleHandler consoleHandler = new ConsoleHandler(requestHandler, sender, responseHandler);
         try {
-            tcpClient.run();
+            udpClient.run();
             consoleHandler.takeInput();
         } catch (ConnectException ex) {
             consoleHandler.printError("Server is offline.");

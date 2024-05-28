@@ -35,7 +35,7 @@ public class Server {
                 new RemoveGreater("remove_greater"),
                 new RemoveLower("remove_lower"));
         RequestProcessor requestProcessor = new RequestProcessor(commandProcessor);
-        TCPServer server = new TCPServer(commandProcessor, requestProcessor, new LoggingProcessor("journal.log"));
+        UDPServer server = new UDPServer(commandProcessor, requestProcessor, new LoggingProcessor("journal.log"));
 
         try {
             server.openConnection();
