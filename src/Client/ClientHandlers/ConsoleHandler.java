@@ -355,6 +355,10 @@ public class ConsoleHandler {
             return new ErrorResponse(ex.toString());
         } catch (IOException ex) {
             throw new RuntimeException(ex);
+        } catch (ExitFailedException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 

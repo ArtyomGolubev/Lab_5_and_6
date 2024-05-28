@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.ByteBuffer;
 
 public class Serializer {
 
@@ -21,7 +22,7 @@ public class Serializer {
         return data;
     }
 
-    public static RequestDTO deserializeObject(byte[] data) throws IOException, ClassNotFoundException {
+    public static RequestDTO deserializeObject(ByteBuffer data) throws IOException, ClassNotFoundException {
         try (ByteArrayInputStream bais = new ByteArrayInputStream(data);
              ObjectInputStream ois = new ObjectInputStream(bais)) {
             return (RequestDTO) ois.readObject();

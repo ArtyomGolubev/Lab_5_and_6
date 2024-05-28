@@ -64,8 +64,9 @@
 
 package Client;
 
+import Other.Exceptions.ConnectionFailedException;
+import Other.Exceptions.ExitFailedException;
 import Other.Network.NetworkProvider;
-
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -74,7 +75,7 @@ import java.net.InetSocketAddress;
 public class UDPClient implements NetworkProvider {
     private final String host;
     private final int port;
-    private DatagramSocket socket;
+    private DatagramSocket datagramSocket;
 
     public UDPClient(String host, int port) {
         this.host = host;
@@ -87,29 +88,46 @@ public class UDPClient implements NetworkProvider {
     }
 
     @Override
-    public void openConnection() throws IOException {
-        connect();
-    }
-
-    private void connect() throws IOException {
-        this.socket = new DatagramSocket();
-    }
-
-    public void closeConnection() throws IOException {
-        if (socket != null && !socket.isClosed()) {
-            socket.close();
+    public void openConnection() {
+        try {
+            connect();
+        } catch (IOException ex) {
+            throw new ConnectionFailedException("Connection failed.");
         }
     }
 
-    public void send(byte[] data) throws IOException {
-        DatagramPacket packet = new DatagramPacket(data, data.length, new InetSocketAddress(host, port));
-        socket.send(packet);
+    private void connect() throws IOException {
+        this.datagramSocket = new DatagramSocket();
     }
 
-    public byte[] receive(int bufferSize) throws IOException {
-        byte[] buffer = new byte[bufferSize];
+    public void send(byte[] data) throws IOException {
+        DatagramPacket packet = new DatagramPacket(data, data.length,
+                new InetSocketAddress(this.host, this.port));
+        datagramSocket.send(packet);
+    }
+
+    public byte[] receive() throws IOException {
+        byte[] buffer = new byte[4096];
         DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
-        socket.receive(packet);
+        datagramSocket.receive(packet);
         return packet.getData();
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void closeConnection() throws ExitFailedException {
+        try {
+            if (datagramSocket != null) {
+                datagramSocket.close();
+            }
+        } catch (IOException ex) {
+            throw new ExitFailedException(ex);
+        }
     }
 }

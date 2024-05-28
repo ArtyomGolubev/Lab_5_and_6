@@ -142,18 +142,17 @@
 package Server;
 
 import Other.Network.NetworkProvider;
+import Other.Network.Serializer;
 import Other.Responses.AbstractResponse;
 import Server.Processors.CommandProcessor;
 import Server.Processors.LoggingProcessor;
 import Server.Processors.RequestProcessor;
+
 import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.DatagramChannel;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
-import java.nio.channels.spi.SelectorProvider;
-import java.util.Iterator;
 
 public class UDPServer implements NetworkProvider {
     private static final int BUFFER_SIZE = 4096;
@@ -161,8 +160,7 @@ public class UDPServer implements NetworkProvider {
     private static final String HOST = "localhost";
     private static final int PORT = 49446;
 
-    private DatagramChannel datagramChannel;
-    private Selector selector;
+    private DatagramSocket datagramSocket;
     private CommandProcessor commandProcessor;
     private RequestProcessor requestProcessor;
     private LoggingProcessor loggingProcessor;
@@ -176,67 +174,39 @@ public class UDPServer implements NetworkProvider {
 
     @Override
     public void openConnection() throws IOException {
-        this.datagramChannel = DatagramChannel.open();
-        this.datagramChannel.socket().bind(new InetSocketAddress(HOST, PORT));
-        this.selector = initSelector();
+        this.datagramSocket = new DatagramSocket(new InetSocketAddress(HOST, PORT));
     }
 
     @Override
     public void run() {
         try {
             while (true) {
-                selector.selectNow();
-                Iterator<SelectionKey> selectedKeys = selector.selectedKeys().iterator();
-                while (selectedKeys.hasNext()) {
-                    SelectionKey key = takeKey(selectedKeys);
-                    processKey(key);
-                }
+                DatagramPacket packet = new DatagramPacket(new byte[BUFFER_SIZE], BUFFER_SIZE);
+                datagramSocket.receive(packet);
+                processPacket(packet);
             }
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
     }
 
-    private SelectionKey takeKey(Iterator<SelectionKey> selectionKeyIterator) {
-        SelectionKey key = selectionKeyIterator.next();
-        selectionKeyIterator.remove();
-        return key;
-    }
-
-    private Selector initSelector() throws IOException {
-        Selector socketSelector = SelectorProvider.provider().openSelector();
-        this.datagramChannel.register(socketSelector, SelectionKey.OP_READ);
-        return socketSelector;
-    }
-
-    private void processKey(SelectionKey key) throws IOException {
-        DatagramChannel datagramChannel = (DatagramChannel) key.channel();
+    private void processPacket(DatagramPacket packet) throws IOException {
         this.buffer.clear();
-        int bytesRead;
-        try {
-            bytesRead = datagramChannel.read(this.buffer);
-        } catch (IOException e) {
-            key.cancel();
-            datagramChannel.close();
-            return;
-        }
-
-        if (bytesRead == -1) {
-            key.cancel();
-            return;
-        }
+        this.buffer.put(packet.getData(), 0, packet.getLength());
         this.buffer.flip();
 
         AbstractResponse response = requestProcessor.processRequest(buffer);
         System.out.println(response);
         loggingProcessor.log("Sent: " + response.toString());
 
-        datagramChannel.register(this.selector, SelectionKey.OP_WRITE, response);
+        byte[] responseData = Serializer.serializeObject(response);
+        DatagramPacket responsePacket = new DatagramPacket(responseData, responseData.length, packet.getAddress(), packet.getPort());
+        datagramSocket.send(responsePacket);
     }
 
     public void close() throws IOException {
-        if (datagramChannel != null) {
-            datagramChannel.close();
+        if (datagramSocket != null) {
+            datagramSocket.close();
         }
     }
 }
