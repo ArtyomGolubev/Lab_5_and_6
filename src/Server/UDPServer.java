@@ -177,6 +177,7 @@ public class UDPServer implements NetworkProvider {
     @Override
     public void openConnection() throws IOException {
         this.datagramSocket = new DatagramSocket(new InetSocketAddress(HOST, PORT));
+        this.datagramSocket.setSoTimeout(10000000);
     }
 
     @Override
@@ -200,12 +201,16 @@ public class UDPServer implements NetworkProvider {
         AbstractResponse response = requestProcessor.processRequest(buffer);
         System.out.println(response);
         loggingProcessor.log("Sent: " + response.toString());
-
         ByteBuffer responseData = Serializer.serializeObject(response);
         byte[] arr = new byte[responseData.remaining()];
         DatagramPacket responsePacket = new DatagramPacket(arr, arr.length, packet.getAddress(), packet.getPort());
-        datagramSocket.send(responsePacket);
+
+        try {
+            datagramSocket.send(responsePacket);
+        } catch (IOException ex) {
+        }
     }
+
 
     public void close() throws IOException {
         if (datagramSocket != null) {

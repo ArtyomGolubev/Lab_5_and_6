@@ -1,4 +1,4 @@
-мая 29, 2024 3:02:42 PM Server.Processors.LoggingProcessor log
+мая 29, 2024 4:04:14 PM Server.Processors.LoggingProcessor log
 INFO: Sent: List of available commands:
 update                         | (long id) Update marine by id
 info                           | (standart) Display information about the Imperium Army

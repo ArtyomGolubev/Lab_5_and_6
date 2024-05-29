@@ -107,13 +107,22 @@ public class UDPClient implements NetworkProvider {
     public void send(DatagramPacket data) throws IOException {
         InetAddress address = InetAddress.getByName(this.host);
         DatagramPacket packet = new DatagramPacket(data.getData(), data.getLength(), address, this.port);
-        datagramSocket.send(packet);
+
+        try {
+            datagramSocket.send(packet);
+        } catch (IOException ex) {
+        }
     }
 
     public DatagramPacket receive() throws IOException {
         byte[] buffer = new byte[4096];
         DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
-        datagramSocket.receive(packet);
+
+        try {
+            datagramSocket.receive(packet);
+        } catch (IOException ex) {
+        }
+
         return packet;
     }
 
