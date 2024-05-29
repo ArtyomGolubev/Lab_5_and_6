@@ -62,6 +62,8 @@
 //    }
 //}
 
+
+
 package Client;
 
 import Other.Exceptions.ConnectionFailedException;
@@ -70,7 +72,7 @@ import Other.Network.NetworkProvider;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.InetSocketAddress;
+import java.net.InetAddress;
 
 public class UDPClient implements NetworkProvider {
     private final String host;
@@ -98,19 +100,21 @@ public class UDPClient implements NetworkProvider {
 
     private void connect() throws IOException {
         this.datagramSocket = new DatagramSocket();
+        InetAddress address = InetAddress.getByName(this.host);
+        this.datagramSocket.connect(address, this.port);
     }
 
-    public void send(byte[] data) throws IOException {
-        DatagramPacket packet = new DatagramPacket(data, data.length,
-                new InetSocketAddress(this.host, this.port));
+    public void send(DatagramPacket data) throws IOException {
+        InetAddress address = InetAddress.getByName(this.host);
+        DatagramPacket packet = new DatagramPacket(data.getData(), data.getLength(), address, this.port);
         datagramSocket.send(packet);
     }
 
-    public byte[] receive() throws IOException {
+    public DatagramPacket receive() throws IOException {
         byte[] buffer = new byte[4096];
         DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
         datagramSocket.receive(packet);
-        return packet.getData();
+        return packet;
     }
 
     public String getHost() {
@@ -122,12 +126,8 @@ public class UDPClient implements NetworkProvider {
     }
 
     public void closeConnection() throws ExitFailedException {
-        try {
-            if (datagramSocket != null) {
-                datagramSocket.close();
-            }
-        } catch (IOException ex) {
-            throw new ExitFailedException(ex);
+        if (datagramSocket != null) {
+            datagramSocket.close();
         }
     }
 }

@@ -139,6 +139,8 @@
 //    }
 //}
 
+
+
 package Server;
 
 import Other.Network.NetworkProvider;
@@ -199,8 +201,9 @@ public class UDPServer implements NetworkProvider {
         System.out.println(response);
         loggingProcessor.log("Sent: " + response.toString());
 
-        byte[] responseData = Serializer.serializeObject(response);
-        DatagramPacket responsePacket = new DatagramPacket(responseData, responseData.length, packet.getAddress(), packet.getPort());
+        ByteBuffer responseData = Serializer.serializeObject(response);
+        byte[] arr = new byte[responseData.remaining()];
+        DatagramPacket responsePacket = new DatagramPacket(arr, arr.length, packet.getAddress(), packet.getPort());
         datagramSocket.send(responsePacket);
     }
 
