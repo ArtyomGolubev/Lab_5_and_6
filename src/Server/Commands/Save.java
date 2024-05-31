@@ -20,4 +20,9 @@ public class Save extends AbstractCommand implements StandartCommand {
         fileHandler.write(collectionProcessor.getCollection(), collectionProcessor.getCollectionFileName());
         return new RegardsResponse(getConsoleName(), regards);
     }
+
+    @Override
+    public void executeSave(){
+        fileHandler.write(collectionProcessor.getCollection(), collectionProcessor.getCollectionFileName());
+    }
 }

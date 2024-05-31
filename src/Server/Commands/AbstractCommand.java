@@ -57,4 +57,8 @@ public abstract class AbstractCommand {
     public AbstractResponse execute(RequestDTO requestDTO) throws IOException {
         return new EmptyResponse();
     }
+
+    public void executeSave(){
+        fileHandler.write(collectionProcessor.getCollection(), collectionProcessor.getCollectionFileName());
+    }
 }

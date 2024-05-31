@@ -2,12 +2,13 @@ package Server;
 
 import Other.Network.NetworkProvider;
 import Other.Network.Serializer;
+import Other.Requests.SaveRequest;
 import Other.Responses.AbstractResponse;
-import Server.Processors.CommandProcessor;
-import Server.Processors.LoggingProcessor;
-import Server.Processors.RequestProcessor;
+import Server.Processors.*;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -23,6 +24,8 @@ public class TCPServer implements NetworkProvider {
     private static final String HOST = "localhost";
     private static final int PORT = 49446;
 
+    private BufferedReader consoleReader;
+
     private ServerSocketChannel serverSocketChannel;
     private Selector selector;
     private CommandProcessor commandProcessor;
@@ -36,6 +39,7 @@ public class TCPServer implements NetworkProvider {
         this.requestProcessor = requestProcessor;
         this.buffer = ByteBuffer.allocate(BUFFER_SIZE);
         this.loggingProcessor = loggingProcessor;
+        this.consoleReader = new BufferedReader(new InputStreamReader(System.in));
     }
     @Override
     public void openConnection() throws IOException {
@@ -55,6 +59,12 @@ public class TCPServer implements NetworkProvider {
                 while (selectedKeys.hasNext()) {
                     SelectionKey key = takeKey(selectedKeys);
                     processKey(key);
+                }
+                if (consoleReader.ready()) {
+                    String input = consoleReader.readLine();
+                    if (input.equalsIgnoreCase("save")) {
+                        commandProcessor.getCommands().get("save").executeSave();
+                    }
                 }
             }
         } catch (IOException ex) {

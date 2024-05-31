@@ -1,73 +1,32 @@
-мая 31, 2024 1:40:51 PM Server.Processors.LoggingProcessor log
-INFO: Connected: /127.0.0.1:55175
-мая 31, 2024 1:40:58 PM Server.Processors.LoggingProcessor log
+мая 31, 2024 6:39:50 PM Server.Processors.LoggingProcessor log
+INFO: Connected: /127.0.0.1:52341
+мая 31, 2024 6:39:52 PM Server.Processors.LoggingProcessor log
 INFO: Sent: List of available commands:
-add                            | (standart) Add a new marine to the Imperium Army
-update                         | (long id) Update marine by id
-remove_any_by_heart_count      | (int heartCount) Remove marine with a given heart count from the Imperium Army
-filter_contains_name           | (String name) Display marines whose 'name' field contains a given substring
-help                           | (standart) Display list of available commands
-save                           | (pathtofile) Writes the Imperium Army list in the given book // unavailable to client, saves automatically
-remove_lower                   | (standart) Remove marines lower than given
-show                           | (int amount) Shows the Imperium Army list
-exit                           | (standart) Close the Imperium Army management program
-info                           | (standart) Display information about the Imperium Army
-filter_less_than_health        | (float health) Display every marine with amount of HP less than given
 clear                          | (standart) clear the Imperium Army
 remove_greater                 | (standart) Remove marines greater than given
 remove_by_id                   | (long id) Remove marine from the Imperium Army by id
+filter_contains_name           | (String name) Display marines whose 'name' field contains a given substring
+filter_less_than_health        | (float health) Display every marine with amount of HP less than given
+add                            | (standart) Add a new marine to the Imperium Army
+save                           | (pathtofile) Writes the Imperium Army list in the given book // unavailable to client, saves automatically
 shuffle                        | (standart) Shuffles marines in the Imperium Army list
+update                         | (long id) Update marine by id
+exit                           | (standart) Close the Imperium Army management program
+remove_lower                   | (standart) Remove marines lower than given
+show                           | (int amount) Shows the Imperium Army list
+remove_any_by_heart_count      | (int heartCount) Remove marine with a given heart count from the Imperium Army
+help                           | (standart) Display list of available commands
+info                           | (standart) Display information about the Imperium Army
 
-мая 31, 2024 1:41:34 PM Server.Processors.LoggingProcessor log
-INFO: Sent: Marines shuffled!
-мая 31, 2024 1:41:45 PM Server.Processors.LoggingProcessor log
-INFO: Sent: Marine: {Id:6617197482982244352, Name:1, Coordinates:{x =1.0, y =1.0}, CreationDate:2024-05-31, Amount of HP:1.0, Amount of hearts: 1, Astartes Category:Astartes Category {Capable of providing rapid response to heavily armoured enemy threats}, Weapon:Weapon {Flamethrower, capable of burning your enemies alive}, Chapter:{Name:1', Parent Legion:1}}
-Marine: {Id:8840768174440584192, Name:1, Coordinates:{x =1.0, y =1.0}, CreationDate:2024-05-31, Amount of HP:1.0, Amount of hearts: 1, Astartes Category:Astartes Category {Capable of providing rapid response to heavily armoured enemy threats}, Weapon:Weapon {Flamethrower, capable of burning your enemies alive}, Chapter:{Name:1', Parent Legion:1}}
-Marine: {Id:2328783646651611136, Name:1, Coordinates:{x =1.0, y =1.0}, CreationDate:2024-05-31, Amount of HP:1.0, Amount of hearts: 1, Astartes Category:Astartes Category {Capable of providing rapid response to heavily armoured enemy threats}, Weapon:Weapon {Flamethrower, capable of burning your enemies alive}, Chapter:{Name:1', Parent Legion:1}}
-
-мая 31, 2024 1:42:04 PM Server.Processors.LoggingProcessor log
-INFO: Sent: Other.Exceptions.NotFoundException: No marine with such id found.
-мая 31, 2024 1:42:51 PM Server.Processors.LoggingProcessor log
-INFO: Sent: Marine: {Id:6617197482982244352, Name:1, Coordinates:{x =1.0, y =1.0}, CreationDate:2024-05-31, Amount of HP:1.0, Amount of hearts: 1, Astartes Category:Astartes Category {Capable of providing rapid response to heavily armoured enemy threats}, Weapon:Weapon {Flamethrower, capable of burning your enemies alive}, Chapter:{Name:1', Parent Legion:1}}
-Marine: {Id:2328783646651611136, Name:1, Coordinates:{x =1.0, y =1.0}, CreationDate:2024-05-31, Amount of HP:1.0, Amount of hearts: 1, Astartes Category:Astartes Category {Capable of providing rapid response to heavily armoured enemy threats}, Weapon:Weapon {Flamethrower, capable of burning your enemies alive}, Chapter:{Name:1', Parent Legion:1}}
-
-мая 31, 2024 1:43:07 PM Server.Processors.LoggingProcessor log
-INFO: Sent: Marine: {Id:6617197482982244352, Name:1, Coordinates:{x =1.0, y =1.0}, CreationDate:2024-05-31, Amount of HP:1.0, Amount of hearts: 1, Astartes Category:Astartes Category {Capable of providing rapid response to heavily armoured enemy threats}, Weapon:Weapon {Flamethrower, capable of burning your enemies alive}, Chapter:{Name:1', Parent Legion:1}}
-Marine: {Id:2328783646651611136, Name:1, Coordinates:{x =1.0, y =1.0}, CreationDate:2024-05-31, Amount of HP:1.0, Amount of hearts: 1, Astartes Category:Astartes Category {Capable of providing rapid response to heavily armoured enemy threats}, Weapon:Weapon {Flamethrower, capable of burning your enemies alive}, Chapter:{Name:1', Parent Legion:1}}
-
-мая 31, 2024 1:44:04 PM Server.Processors.LoggingProcessor log
-INFO: Sent: Army cleared! Good luck defending against the xenos
-мая 31, 2024 1:44:08 PM Server.Processors.LoggingProcessor log
-INFO: Sent: List written in the book!
-мая 31, 2024 1:44:14 PM Server.Processors.LoggingProcessor log
-INFO: Connected: /127.0.0.1:55249
-мая 31, 2024 1:44:16 PM Server.Processors.LoggingProcessor log
-INFO: Sent: 
-мая 31, 2024 1:44:39 PM Server.Processors.LoggingProcessor log
+мая 31, 2024 6:40:00 PM Server.Processors.LoggingProcessor log
+INFO: Sent: Collection type: java.util.LinkedList
+Elements type: Other.SpaceMarines.SpaceMarine
+Amount of elements: 10
+Last update date: 2024-05-31
+мая 31, 2024 6:40:07 PM Server.Processors.LoggingProcessor log
 INFO: Sent: New marine joined the Imperium Army ranks!
-мая 31, 2024 1:44:40 PM Server.Processors.LoggingProcessor log
-INFO: Sent: New marine joined the Imperium Army ranks!
-мая 31, 2024 1:44:40 PM Server.Processors.LoggingProcessor log
-INFO: Sent: New marine joined the Imperium Army ranks!
-мая 31, 2024 1:44:41 PM Server.Processors.LoggingProcessor log
-INFO: Sent: New marine joined the Imperium Army ranks!
-мая 31, 2024 1:44:43 PM Server.Processors.LoggingProcessor log
-INFO: Sent: New marine joined the Imperium Army ranks!
-мая 31, 2024 1:44:43 PM Server.Processors.LoggingProcessor log
-INFO: Sent: New marine joined the Imperium Army ranks!
-мая 31, 2024 1:44:44 PM Server.Processors.LoggingProcessor log
-INFO: Sent: New marine joined the Imperium Army ranks!
-мая 31, 2024 1:44:45 PM Server.Processors.LoggingProcessor log
-INFO: Sent: New marine joined the Imperium Army ranks!
-мая 31, 2024 1:44:48 PM Server.Processors.LoggingProcessor log
-INFO: Sent: Marine: {Id:7541810540456198144, Name:1, Coordinates:{x =1.0, y =1.0}, CreationDate:2024-05-31, Amount of HP:1.0, Amount of hearts: 1, Astartes Category:Astartes Category {Capable of providing rapid response to heavily armoured enemy threats}, Weapon:Weapon {Flamethrower, capable of burning your enemies alive}, Chapter:{Name:1', Parent Legion:1}}
-Marine: {Id:6502074289454234624, Name:1, Coordinates:{x =1.0, y =1.0}, CreationDate:2024-05-31, Amount of HP:1.0, Amount of hearts: 1, Astartes Category:Astartes Category {Capable of providing rapid response to heavily armoured enemy threats}, Weapon:Weapon {Flamethrower, capable of burning your enemies alive}, Chapter:{Name:1', Parent Legion:1}}
-Marine: {Id:5777422859795702784, Name:1, Coordinates:{x =1.0, y =1.0}, CreationDate:2024-05-31, Amount of HP:1.0, Amount of hearts: 1, Astartes Category:Astartes Category {Capable of providing rapid response to heavily armoured enemy threats}, Weapon:Weapon {Flamethrower, capable of burning your enemies alive}, Chapter:{Name:1', Parent Legion:1}}
-Marine: {Id:6734357804173160448, Name:1, Coordinates:{x =1.0, y =1.0}, CreationDate:2024-05-31, Amount of HP:1.0, Amount of hearts: 1, Astartes Category:Astartes Category {Capable of providing rapid response to heavily armoured enemy threats}, Weapon:Weapon {Flamethrower, capable of burning your enemies alive}, Chapter:{Name:1', Parent Legion:1}}
-Marine: {Id:6258528260587704320, Name:1, Coordinates:{x =1.0, y =1.0}, CreationDate:2024-05-31, Amount of HP:1.0, Amount of hearts: 1, Astartes Category:Astartes Category {Capable of providing rapid response to heavily armoured enemy threats}, Weapon:Weapon {Flamethrower, capable of burning your enemies alive}, Chapter:{Name:1', Parent Legion:1}}
-Marine: {Id:7112070267983055872, Name:1, Coordinates:{x =1.0, y =1.0}, CreationDate:2024-05-31, Amount of HP:1.0, Amount of hearts: 1, Astartes Category:Astartes Category {Capable of providing rapid response to heavily armoured enemy threats}, Weapon:Weapon {Flamethrower, capable of burning your enemies alive}, Chapter:{Name:1', Parent Legion:1}}
-Marine: {Id:3577640344765309952, Name:1, Coordinates:{x =1.0, y =1.0}, CreationDate:2024-05-31, Amount of HP:1.0, Amount of hearts: 1, Astartes Category:Astartes Category {Capable of providing rapid response to heavily armoured enemy threats}, Weapon:Weapon {Flamethrower, capable of burning your enemies alive}, Chapter:{Name:1', Parent Legion:1}}
-Marine: {Id:5387696196768584704, Name:1, Coordinates:{x =1.0, y =1.0}, CreationDate:2024-05-31, Amount of HP:1.0, Amount of hearts: 1, Astartes Category:Astartes Category {Capable of providing rapid response to heavily armoured enemy threats}, Weapon:Weapon {Flamethrower, capable of burning your enemies alive}, Chapter:{Name:1', Parent Legion:1}}
-
-мая 31, 2024 1:44:55 PM Server.Processors.LoggingProcessor log
-INFO: Sent: List written in the book!
+мая 31, 2024 6:40:10 PM Server.Processors.LoggingProcessor log
+INFO: Sent: Collection type: java.util.LinkedList
+Elements type: Other.SpaceMarines.SpaceMarine
+Amount of elements: 11
+Last update date: 2024-05-31
