@@ -12,7 +12,7 @@ import Server.Interfaces.StandartCommand;
 
 public class Save extends AbstractCommand implements StandartCommand {
     public Save(String consoleName) {
-        super(consoleName, "(pathtofile) Writes the Imperium Army list in the given book", "List written in the book!");
+        super(consoleName, "(pathtofile) Writes the Imperium Army list in the given book // unavailable to client, saves automatically", "List written in the book!");
     }
 
     @Override

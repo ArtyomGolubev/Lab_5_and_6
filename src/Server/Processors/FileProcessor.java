@@ -20,13 +20,15 @@ public class FileProcessor implements FileHandler {
         try {
             File file = new File(fileName);
             Scanner in = new Scanner(file, StandardCharsets.UTF_8.name());
-            if (!in.hasNextLine()) throw new NullPointerException("File is empty.");
+
             while (in.hasNextLine()) {
                 String line = in.nextLine();
                 String[] values = line.split(",");
+                if (values.length == 1) {
+                    continue;
+                }
                 try {
                     SpaceMarine marine = parseSpaceMarines(values);
-                    if (marine == null) continue;
                     collection.add(marine);
                 } catch (Exception ex) {
                     System.out.println("Collection can't be processed.");
@@ -37,9 +39,6 @@ public class FileProcessor implements FileHandler {
             return collection;
         } catch (IOException ex) {
             System.out.println("File not found.");
-            return null;
-        } catch (NullPointerException ex) {
-            System.out.println(ex);
             return null;
         }
     }

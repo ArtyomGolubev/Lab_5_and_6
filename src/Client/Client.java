@@ -24,7 +24,6 @@ public class Client {
                 new ShowRequest("show"),
                 new HelpRequest("help"),
                 new InfoRequest("info"),
-                new SaveRequest("save"),
                 new RemoveByIdRequest("remove_by_id"),
                 new FilterLessThanHealthRequest("filter_less_than_health"),
                 new ClearRequest("clear"),
@@ -38,12 +37,12 @@ public class Client {
                 new FilterContainsNameRequest("filter_contains_name"),
                 new ExitRequest("exit"));
 
-        UDPClient udpClient = new UDPClient(SERVER_ADDRESS, SERVER_PORT);
-        Sender sender = new Sender(udpClient);
+        TCPClient tcpClient = new TCPClient(SERVER_ADDRESS, SERVER_PORT);
+        Sender sender = new Sender(tcpClient);
         ResponseHandler responseHandler = new ResponseHandler();
         ConsoleHandler consoleHandler = new ConsoleHandler(requestHandler, sender, responseHandler);
         try {
-            udpClient.run();
+            tcpClient.run();
             consoleHandler.takeInput();
         } catch (ConnectException ex) {
             consoleHandler.printError("Server is offline.");

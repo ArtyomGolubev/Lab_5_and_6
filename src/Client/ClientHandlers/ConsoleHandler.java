@@ -200,7 +200,7 @@ public class ConsoleHandler {
                 }
                 if (Checker.CorrectNumberChecker(num, Integer.class)) {
                     if (Integer.parseInt(num) <= AstartesCategory.values().length && Integer.parseInt(num) >= 1) {
-                        return AstartesCategory.values()[Integer.parseInt(num)-1];
+                        return AstartesCategory.values()[Integer.parseInt(num)];
                     } else {
                         throw new WrongParameterException("Wrong number entered.");
                     }
@@ -238,7 +238,7 @@ public class ConsoleHandler {
                 }
                 if (Checker.CorrectNumberChecker(num, Integer.class)) {
                     if (Integer.parseInt(num) <= Weapon.values().length && Integer.parseInt(num) >= 1) {
-                        return Weapon.values()[Integer.parseInt(num)-1];
+                        return Weapon.values()[Integer.parseInt(num)];
                     } else {
                         throw new WrongParameterException("Wrong number.");
                     }

@@ -31,14 +31,19 @@ public class CollectionProcessor {
     }
 
     public void loadFromFile(String fileName) {
-        this.collection = fileHandler.read(fileName);
-        this.collectionFileName = fileName;
-        if (collection != null) {
-            //try {
-                Collections.sort(collection);
-//            } catch (NullPointerException ex) {
-//                System.out.println(ex);
-//            }
+        try {
+            this.collection = fileHandler.read(fileName);
+            this.collectionFileName = fileName;
+
+            if (collection == null || collection.isEmpty()) {
+                throw new IllegalArgumentException("File is empty.");
+            }
+
+            Collections.sort(collection);
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error loading collection from file: " + ex.getMessage());
         }
     }
 
